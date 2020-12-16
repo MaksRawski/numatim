@@ -1,0 +1,17 @@
+name: numatim
+version: "0.2"
+author: Maks Rawski <maksymilian.rawski@tutanota.com>
+about: Returns a given number in words
+args:
+  - language:
+     short: l
+     long: language
+     value_name: lang
+     help: Sets a language to use
+     takes_value: true
+  - dictionary:
+    short: d
+    long: dictionary
+    value_name: dict
+    help: Location of the dictionary to use
+    takes_value: true
