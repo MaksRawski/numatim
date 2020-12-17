@@ -73,9 +73,7 @@
 		"kwindecyliard",
 		"sedecylion",
 		"sedecyliard",
-		"googol"
-	],
-	"ignore": [
+		"googol",
 		"septendecylion",
 		"septendecyliard",
 		"oktodecylion",
@@ -2041,6 +2039,8 @@
 		"oktononagintanongentylion",
 		"oktononagintanongentyliard",
 		"nowenonagintanongentylion",
-		"nowenonagintanongentyliard"
+		"nowenonagintanongentyliard",
+		"mililion",
+		"miliard"
 	]
 }
