@@ -4,7 +4,6 @@ use numatim::*;
 use clap::{App, Arg};
 
 use regex::Regex;
-use serde_json::Value;
 use std::fs;
 use std::io;
 use std::process;
@@ -75,8 +74,8 @@ fn main() {
         let chunk_str: String = chunk.iter().collect();
         let chunk_num = chunk_str.parse().unwrap();
 
-        // print!("{}", chunk_to_words(chunk_num, &dict.numbers));
-        print!("{}", power_of_hundred(hundreds, chunk_num, &dict.powers));
+        print!("{}", chunk_to_words(chunk_num, &dict.numbers));
+        print!("{} ", power_of_hundred(hundreds, chunk_num, &dict.powers));
     }
     println!();
 }

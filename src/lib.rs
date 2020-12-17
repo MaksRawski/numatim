@@ -1,27 +1,50 @@
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
 
+// TODO: refactor this and maybe even make it a method on top of Dict
 pub fn chunk_to_words(chunk: u16, numbers: &Vec<Value>) -> String {
     let mut result = String::new();
+    let mut nums = Vec::new();
+
+    nums.push(numbers[0].as_array().unwrap());
+    nums.push(numbers[1].as_array().unwrap());
+    nums.push(numbers[2].as_array().unwrap());
+
     if chunk == 0 {
         return result;
     } else {
+        // 100, 200, ..., 900
         if chunk >= 100 {
-            let number = numbers[2].as_array().unwrap()[(chunk / 100 - 1) as usize]
+            let number = nums[2][(chunk / 100 - 1) as usize].as_str().unwrap();
+            result = format!("{} ", &number[..]);
+        }
+
+        // 11-19
+        if (11..=19).contains(&(chunk % 100)) {
+            // this will only work if language provides "teens"
+            let number = &nums[1][(chunk % 100) as usize].as_array().unwrap()[0]
                 .as_str()
                 .unwrap();
-            result = format!("{} ", &number[..]);
-        } else {
-            return "".to_string();
+            result = format!("{}{} ", result, number)
+        }
+        // 10, 20, ..., 100
+        else if chunk % 100 >= 20 || chunk % 100 == 10 {
+            let number = &nums[1][(chunk % 100 / 10 - 1) as usize].as_array().unwrap()[1]
+                .as_str()
+                .unwrap();
+            result = format!("{}{} ", result, number)
+        }
+
+        // 1-9
+        if chunk % 10 != 0 {
+            let digit = nums[0][(chunk % 10 - 1) as usize].as_str().unwrap();
+            result = format!("{}{} ", result, digit)
         }
     }
-    // result.push_str(numbers[2][(chunk / 100) as usize].as_str().unwrap());
-    // result.push_str(numbers[0][(chunk % 10) as usize].as_str().unwrap());
-    // result.push_str(numbers[1][(chunk % 10 / 10) as usize][1].as_str().unwrap());
     result
 }
 
-// TODO: refactor this
+// TODO: refactor this and maybe even make it a method on top of Dict
 pub fn power_of_hundred<'a>(index: usize, multiple: u16, powers: &Vec<Value>) -> String {
     let mut res = String::new();
 
@@ -64,7 +87,7 @@ pub fn power_of_hundred<'a>(index: usize, multiple: u16, powers: &Vec<Value>) ->
                         _ => delimiters[2].as_str().unwrap(),
                     };
                 }
-                res = format!("{}{} ", res, delimiter);
+                res = format!("{}{}", res, delimiter);
             }
         };
     }
