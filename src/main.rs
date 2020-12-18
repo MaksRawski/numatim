@@ -31,7 +31,7 @@ fn main() {
         )
         .get_matches();
 
-    let lang = matches.value_of("lang").unwrap_or("pl");
+    let lang = matches.value_of("language").unwrap_or("en");
     let dict_location = format!("dicts/{}.json", lang);
 
     let dict = match fs::read_to_string(&dict_location) {
@@ -58,6 +58,7 @@ fn main() {
     let re = Regex::new(r"[^\d]").unwrap();
     input = re.replace_all(&input, "").to_owned().to_string();
 
+    // everything after this line should be done on the backend
     // pad with leading zeros if input is not divisible by 3
     if input.len() % 3 != 0 {
         let leading_zeros = "0".repeat(3 - (input.len() % 3));

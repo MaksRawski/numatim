@@ -21,22 +21,32 @@ pub fn chunk_to_words(chunk: u16, numbers: &Vec<Value>) -> String {
 
         // 11-19
         if (11..=19).contains(&(chunk % 100)) {
-            // this will only work if language provides "teens"
-            let number = &nums[1][(chunk % 100) as usize].as_array().unwrap()[0]
+            // this will only work if language has hardcoded tenths
+            let number = &nums[1][(chunk % 100 - 11) as usize].as_array().unwrap()[0]
                 .as_str()
                 .unwrap();
             result = format!("{}{} ", result, number)
         }
         // 10, 20, ..., 100
         else if chunk % 100 >= 20 || chunk % 100 == 10 {
-            let number = &nums[1][(chunk % 100 / 10 - 1) as usize].as_array().unwrap()[1]
+            let number = &mut nums[1][(chunk % 100 / 10 - 1) as usize].as_array().unwrap()[1]
                 .as_str()
-                .unwrap();
-            result = format!("{}{} ", result, number)
+                .unwrap()
+                .to_string();
+            let deli = number.chars().last().unwrap();
+
+            if deli == '-' && chunk % 10 == 0 {
+                number.truncate(number.len() - 1);
+                result = format!("{}{} ", result, number)
+            } else if deli != '-' {
+                result = format!("{}{} ", result, number)
+            } else {
+                result = format!("{}{}", result, number)
+            }
         }
 
         // 1-9
-        if chunk % 10 != 0 {
+        if chunk % 10 != 0 && (chunk % 100 / 10) != 1 {
             let digit = nums[0][(chunk % 10 - 1) as usize].as_str().unwrap();
             result = format!("{}{} ", result, digit)
         }
