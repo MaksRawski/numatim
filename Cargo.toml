@@ -1,11 +1,11 @@
 [package]
 name = "numatim"
-version = "0.2.1"
+version = "0.2.2"
 authors = ["Maks Rawski <maksymilian.rawski@tutanota.com>"]
 description = "Returns a given number in words."
-homepage = "https://gitlab.com/maksymilian/numatim"
-documentation = "https://gitlab.com/maksymilian/numatim"
-repository = "https://gitlab.com/maksymilian/numatim"
+homepage = "https://gitlab.com/maksrawski/numatim"
+documentation = "https://gitlab.com/maksrawski/numatim"
+repository = "https://gitlab.com/maksrawski/numatim"
 readme = "README.md"
 edition = "2018"
 license = "MIT"
