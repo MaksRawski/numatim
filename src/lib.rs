@@ -1,6 +1,35 @@
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
 
+// Number needs to be sanitized before usage.
+pub fn verbatim(number: String, dict: Dict) -> Result<String, String> {
+    let mut number = number;
+    // pad with leading zeros if input is not divisible by 3
+    if number.len() % 3 != 0 {
+        let leading_zeros = "0".repeat(3 - (number.len() % 3));
+        number.insert_str(0, &leading_zeros);
+    }
+    let mut res = String::new();
+
+    let mut hundreds: usize = number.len() / 3;
+    if hundreds > dict.powers.len() {
+        return Err("Too long number".to_string());
+    }
+    for chunk in number.chars().collect::<Vec<char>>().chunks(3) {
+        hundreds -= 1;
+        let chunk_str: String = chunk.iter().collect();
+        let chunk_num = chunk_str.parse().unwrap();
+
+        res = format!("{}{}", res, chunk_to_words(chunk_num, &dict.numbers));
+        res = format!(
+            "{}{} ",
+            res,
+            power_of_hundred(hundreds, chunk_num, &dict.powers)
+        );
+    }
+    Ok(res)
+}
+
 // TODO: refactor this and maybe even make it a method on top of Dict
 pub fn chunk_to_words(chunk: u16, numbers: &Vec<Value>) -> String {
     let mut result = String::new();

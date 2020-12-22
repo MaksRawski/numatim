@@ -6,10 +6,14 @@ Supported languages can be found in `dicts`. Default language is English.
 This project is work in progress so if it's impossible to implement a dict for a 
 particular language please open an issue.
 
+## Installation
+
+```
+cargo install numatim
+```
+
 ## TODO:
 
-* store dicts in ~/.config/numatim probably using `confy`
-* add toki pona
 * add tests
 * choose default language based on locale
 * add reverse option
