@@ -8,9 +8,7 @@ particular language please open an issue.
 
 ## Installation
 
-```
-cargo install numatim
-```
+`cargo install numatim`
 
 ## TODO:
 
